@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <style>
+        /* Internal CSS for Signup Page */
+        :root {
+            --main-color: #7f855a;
+            --second-color: #E3E7AF;
+            --text-color: #070606;
+            --gradient: linear-gradient(#7f855a, #E3E7AF);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: #EFF1C5; /* Matches the header background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .form-container h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--main-color);
+        }
+
+        .input-box {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .input-box span {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .input-box input:focus {
+            border-color: var(--main-color);
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--main-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--gradient);
+        }
+
+        .form-container p {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .form-container p a {
+            color: var(--main-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-container p a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: -1rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Sign Up</h1>
+        <form id="signupForm">
+            <div class="input-box">
+                <span>Full Name</span>
+                <input type="text" id="fullName" placeholder="Enter your full name" required>
+                <p class="error" id="nameError"></p>
+            </div>
+            <div class="input-box">
+                <span>Email</span>
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <p class="error" id="emailError"></p>
+            </div>
+            <div class="input-box">
+                <span>Password</span>
+                <input type="password" id="password" placeholder="Create a password" required>
+                <p class="error" id="passwordError"></p>
+            </div>
+            <div class="input-box">
+                <span>Confirm Password</span>
+                <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                <p class="error" id="confirmPasswordError"></p>
+            </div>
+            <button type="submit" class="btn">Sign Up</button>
+            <p>Already have an account? <a href="login.html">Login</a></p>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript for Form Validation
+        const signupForm = document.getElementById('signupForm');
+        const fullNameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+        signupForm.addEventListener('submit', (e) => {
+            let isValid = true;
+
+            // Full Name Validation
+            if (fullNameInput.value.trim() === '') {
+                nameError.textContent = 'Full name is required.';
+                isValid = false;
+            } else {
+                nameError.textContent = '';
+            }
+
+            // Email Validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                emailError.textContent = 'Please enter a valid email address.';
+                isValid = false;
+            } else {
+                emailError.textContent = '';
+            }
+
+            // Password Validation
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordRegex.test(passwordInput.value)) {
+                passwordError.textContent = 'Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.';
+                isValid = false;
+            } else {
+                passwordError.textContent = '';
+            }
+
+            // Confirm Password Validation
+            if (confirmPasswordInput.value !== passwordInput.value) {
+                confirmPasswordError.textContent = 'Passwords do not match.';
+                isValid = false;
+            } else {
+                confirmPasswordError.textContent = '';
+            }
+
+            // Prevent form submission if validation fails
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
